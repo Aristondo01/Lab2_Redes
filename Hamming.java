@@ -1,5 +1,5 @@
 import java.util.Scanner;
-//import java.util.Arrays;
+import java.util.Arrays;
 
 public class Hamming {
 
@@ -40,8 +40,8 @@ public class Hamming {
         }
         int[] result = new int[data.length + p];
 
-        // System.out.println("pos: " + Arrays.toString(pos));
-        // System.out.println("data: " + Arrays.toString(data));
+        System.out.println("pos: " + Arrays.toString(pos));
+        System.out.println("data: " + Arrays.toString(data));
 
         int cont_pos = 0;
         int data_pos = 0;
@@ -60,7 +60,7 @@ public class Hamming {
                 }
             }
         }
-        // System.out.println("result: " + Arrays.toString(result));
+        System.out.println("result: " + Arrays.toString(result));
 
         int TableParity[] = new int[p];
         for (int i = 0; i < p; i++) {
