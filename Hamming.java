@@ -1,5 +1,4 @@
 import java.util.Scanner;
-import java.util.Arrays;
 
 public class Hamming {
 
@@ -32,21 +31,19 @@ public class Hamming {
 
         int[] pos = new int[p];
         int j = 0;
-        for (int i = 0; i < data.length; i++) {
+        int[] result = new int[data.length + p];
+
+        for (int i = 0; i < result.length; i++) {
             if (Math.pow(2, j) == i + 1) {
-                pos[j] = i + 1;
+                pos[j] = i;
                 j++;
             }
         }
-        int[] result = new int[data.length + p];
-
-        System.out.println("pos: " + Arrays.toString(pos));
-        System.out.println("data: " + Arrays.toString(data));
 
         int cont_pos = 0;
-        int data_pos = 0;
+        int data_pos = data.length - 1;
         for (int i = 0; i < result.length; i++) {
-            if (pos[cont_pos] == i + 1) {
+            if (pos[cont_pos] == i) {
                 result[i] = 2;
                 cont_pos++;
                 if (cont_pos >= pos.length) {
@@ -54,13 +51,12 @@ public class Hamming {
                 }
             } else {
                 result[i] = data[data_pos];
-                data_pos++;
+                data_pos--;
                 if (data_pos >= data.length) {
-                    data_pos--;
+                    data_pos++;
                 }
             }
         }
-        System.out.println("result: " + Arrays.toString(result));
 
         int TableParity[] = new int[p];
         for (int i = 0; i < p; i++) {
@@ -76,7 +72,6 @@ public class Hamming {
             }
             TableParity[i] = count % 2;
         }
-
         j = 0;
         for (int i = 0; i < result.length; i++) {
             if (result[i] == 2) {
