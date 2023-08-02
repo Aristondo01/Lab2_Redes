@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 public class CRCEmisor {
 
-    public static int[] XOR(int[] a, int[]b) {
+    public static int[] XOR(int[] a, int[] b) {
         int[] result = new int[a.length];
         for (int i = 0; i < a.length; i++) {
             result[i] = (a[i] != 0) ^ (b[i] != 0) ? 1 : 0;
@@ -18,8 +18,7 @@ public class CRCEmisor {
         while (i < array.length && !indexFound) {
             if (array[i] == 1) {
                 indexFound = true;
-            }
-            else
+            } else
                 i += 1;
         }
 
@@ -29,12 +28,11 @@ public class CRCEmisor {
     public static int[] mergeArrays(int[] a, int[] b) {
         int[] result = new int[a.length + b.length];
         int i = 0;
-        for (int j = 0; j < a.length; j++)
-        {
+        for (int j = 0; j < a.length; j++) {
             result[i] = a[i];
             i += 1;
         }
-        
+
         for (int j = 0; j < b.length; j++) {
             result[i] = b[j];
             i += 1;
@@ -44,7 +42,7 @@ public class CRCEmisor {
     }
 
     public static void printArray(int[] array) {
-        for (int i = 0; i < array.length; i++){
+        for (int i = 0; i < array.length; i++) {
             System.out.print(array[i]);
         }
         System.out.println("");
@@ -57,13 +55,14 @@ public class CRCEmisor {
             binaryData[i] = Integer.parseInt(String.valueOf(trama.charAt(i)));
         }
 
-        int [] CRC_32 = {1,0,0,0,0,0,1,0,0,1,1,0,0,0,0,0,1,0,0,0,1,1,1,0,1,1,0,1,1,0,1,1,1};
+        int[] CRC_32 = { 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1,
+                1 };
         // int [] CRC_32 = {1,0,0,1};
 
         int start = 0;
         int end = size;
-        boolean finished = false;
-        int[] xorResult = {0};
+        // boolean finished = false;
+        int[] xorResult = { 0 };
         int[] result = Arrays.copyOfRange(binaryData, 0, size);
         while (end < binaryData.length + 1) {
             xorResult = XOR(result, CRC_32);
@@ -112,8 +111,9 @@ public class CRCEmisor {
         boolean allGood = checkInput(trama);
         if (!allGood) {
             System.out.println("Error: Ingrese correctamente la trama.");
-        }
-        else
+        } else
             System.out.println("Resultado: " + calculateCRC(trama));
+
+        scanner.close();
     }
 }
