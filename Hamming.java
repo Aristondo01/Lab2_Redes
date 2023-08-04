@@ -1,8 +1,8 @@
-import java.util.Scanner;
+//import java.util.Scanner;
 
-public class Hamming {
+public class Hamming implements EmisorEnlace {
 
-    public static Object[] checkInput(String input) {
+    private Object[] checkInput(String input) {
         input = input.trim();
         input = input.replace(" ", "");
         int data_int[] = new int[input.length()];
@@ -16,7 +16,7 @@ public class Hamming {
         return new Object[] { true, data_int };
     }
 
-    public static int calculate_p(int data) {
+    private int calculate_p(int data) {
         int p = 0;
         while (Math.pow(2, p) < (p + data + 1)) {
             p++;
@@ -27,7 +27,7 @@ public class Hamming {
         return p;
     }
 
-    public static int[] calculateTable(int[] data, int p) {
+    private int[] calculateTable(int[] data, int p) {
 
         int[] pos = new int[p];
         int j = 0;
@@ -83,7 +83,7 @@ public class Hamming {
         return result;
     }
 
-    public static String toString(int[] trama) {
+    private String toString(int[] trama) {
         String result = "";
         for (int i = trama.length - 1; i >= 0; i--) {
             result += trama[i];
@@ -91,7 +91,7 @@ public class Hamming {
         return result;
     }
 
-    public static String calculateHamming(int[] trama) {
+    private String calculateHamming(int[] trama) {
         int data = trama.length;
         int p = calculate_p(data);
         int[] trama_array = calculateTable(trama, p);
@@ -99,20 +99,13 @@ public class Hamming {
         return transformacion;
     }
 
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Ingrese la trama");
-        System.out.print("> ");
-        String trama = scanner.nextLine();
+    public String obtenerMensaje() {
+        EmisorPresentacion emisorPresentacion = new EmisorPresentacion();
+        String trama = emisorPresentacion.convertToBinary();
         Object[] response = checkInput(trama);
-        boolean allGood = (boolean) response[0];
+        // boolean allGood = (boolean) response[0];
         int[] data_int = (int[]) response[1];
+        return calculateHamming(data_int);
 
-        if (!allGood) {
-            System.out.println("Error: Ingrese correctamente la trama.");
-        } else
-            System.out.println("Resultado: " + calculateHamming(data_int));
-
-        scanner.close();
     }
 }

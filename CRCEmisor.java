@@ -1,9 +1,9 @@
 import java.util.Arrays;
-import java.util.Scanner;
+//import java.util.Scanner;
 
-public class CRCEmisor {
+public class CRCEmisor implements EmisorEnlace {
 
-    public static int[] XOR(int[] a, int[] b) {
+    private int[] XOR(int[] a, int[] b) {
         int[] result = new int[a.length];
         for (int i = 0; i < a.length; i++) {
             result[i] = (a[i] != 0) ^ (b[i] != 0) ? 1 : 0;
@@ -12,7 +12,7 @@ public class CRCEmisor {
         return result;
     }
 
-    public static int getInitialIndex(int[] array) {
+    private int getInitialIndex(int[] array) {
         int i = 0;
         boolean indexFound = false;
         while (i < array.length && !indexFound) {
@@ -25,7 +25,7 @@ public class CRCEmisor {
         return i;
     }
 
-    public static int[] mergeArrays(int[] a, int[] b) {
+    private int[] mergeArrays(int[] a, int[] b) {
         int[] result = new int[a.length + b.length];
         int i = 0;
         for (int j = 0; j < a.length; j++) {
@@ -41,14 +41,14 @@ public class CRCEmisor {
         return result;
     }
 
-    public static void printArray(int[] array) {
+    private void printArray(int[] array) {
         for (int i = 0; i < array.length; i++) {
             System.out.print(array[i]);
         }
         System.out.println("");
     }
 
-    public static String calculateCRC(String trama) {
+    private String calculateCRC(String trama) {
         int size = 33;
         int[] binaryData = new int[trama.length() + size - 1];
         for (int i = 0; i < trama.length(); i++) {
@@ -93,7 +93,7 @@ public class CRCEmisor {
         return trama + resultingTrama;
     }
 
-    public static boolean checkInput(String input) {
+    private boolean checkInput(String input) {
         for (int i = 0; i < input.length(); i++) {
             if (input.charAt(i) != '0' && input.charAt(i) != '1') {
                 return false;
@@ -103,17 +103,10 @@ public class CRCEmisor {
         return true;
     }
 
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Ingrese la trama");
-        System.out.print("> ");
-        String trama = scanner.nextLine();
+    public String obtenerMensaje() {
+        EmisorPresentacion emisorPresentacion = new EmisorPresentacion();
+        String trama = emisorPresentacion.convertToBinary();
         boolean allGood = checkInput(trama);
-        if (!allGood) {
-            System.out.println("Error: Ingrese correctamente la trama.");
-        } else
-            System.out.println("Resultado: " + calculateCRC(trama));
-
-        scanner.close();
+        return calculateCRC(trama);
     }
 }
