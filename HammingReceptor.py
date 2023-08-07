@@ -1,10 +1,7 @@
 import math
+from ReceptorPresentacion import ReceptorPresentacion
 
 class Hamming(object):
-    def __init__(self, trama) -> None:
-        self.trama = trama
-        self.rotate_trama()
-    
     def rotate_trama(self):
         self.trama = self.trama[::-1]
         self.trama = [int(c) for c in self.trama]
@@ -64,24 +61,38 @@ class Hamming(object):
         
         # self.rotate_trama()
         return None, "".join(str(element) for element in self.rotate(self.trama)), "".join(str(element) for element in self.original_message())
+    
+    def detect_error(self, trama):
+        self.trama = trama
+        self.rotate_trama()
+        error, corrected, original = self.correct_errors()
+        presentacion = ReceptorPresentacion()
+        if error:
+            presentacion.decode_message(corrected, error)
+            # print("Hubo errores en la trama en la posicion:", error)
+            # print("Trama corregida:", corrected + ".", "Trama original:", trama)
+        else:
+            presentacion.decode_message(original)
+            # print("No hubo errores en la trama:", corrected + ".", "Trama original:", original)
 
 
-def verify_input(trama):
-    for element in trama:
-        if element != "0" and element != "1":
-            return False
+
+# def verify_input(trama):
+#     for element in trama:
+#         if element != "0" and element != "1":
+#             return False
         
-    return True
+#     return True
 
-print("Ingrese la trama")
-trama = input()
-if not verify_input(trama):
-    print("La trama es inválida")
-else:
-    hamming = Hamming(trama)
-    error, corrected, original = hamming.correct_errors()
-    if error:
-        print("Hubo errores en la trama en la posicion:", error)
-        print("Trama corregida:", corrected + ".", "Trama original:", trama)
-    else:
-        print("No hubo errores en la trama:", corrected + ".", "Trama original:", original)
+# print("Ingrese la trama")
+# trama = input()
+# if not verify_input(trama):
+#     print("La trama es inválida")
+# else:
+#     hamming = Hamming(trama)
+#     error, corrected, original = hamming.correct_errors()
+#     if error:
+#         print("Hubo errores en la trama en la posicion:", error)
+#         print("Trama corregida:", corrected + ".", "Trama original:", trama)
+#     else:
+#         print("No hubo errores en la trama:", corrected + ".", "Trama original:", original)
