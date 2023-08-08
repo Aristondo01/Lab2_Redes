@@ -15,7 +15,7 @@ Esto compilará todos los programas de java y ejecutará la capa de transmisión
 Se deberá ingresar la probabilidad de error de bytes y el método que se desea usar para la detección de errores, el cual puede ser CRC o Hamming.
 
 ## Ejecución del receptor en python
-Acá solo es necesario ejecutar el siguiente comando:
+Acá solo es necesario ejecutar el siguiente comando:  
 $ python ReceptorTransmision.py.
 
 Será solicitado el método que se desea usar para la detección de errores, el cual puede ser CRC o Hamming.
