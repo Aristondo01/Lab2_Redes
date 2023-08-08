@@ -7,9 +7,9 @@ Acá es necesario irse a la branch `parte2` para poder ver el modelo de capas y 
 
 ## Ejecución del emisor en java
 
-Se utilizó un socket para poder enviar los mensajes. Para poder compilar y ejecutarlo es necesario correr en la terminar los siguientes comandos:
-$ javac *.java
-$ java EmisorTransmision
+Se utilizó un socket para poder enviar los mensajes. Para poder compilar y ejecutarlo es necesario correr en la terminar los siguientes comandos:  
+$ javac *.java  
+$ java EmisorTransmision  
 
 Esto compilará todos los programas de java y ejecutará la capa de transmisión que es la entrada a todo el modelo.
 Se deberá ingresar la probabilidad de error de bytes y el método que se desea usar para la detección de errores, el cual puede ser CRC o Hamming.
