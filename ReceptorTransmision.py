@@ -3,7 +3,7 @@ from HammingReceptor import Hamming
 from CRC32Receptor import detect_error
 
 HOST = "127.0.0.1"  # IP, capa de Red. 127.0.0.1 es localhost
-PORT = 65432        # Puerto, capa de Transporte
+PORT = 1235        # Puerto, capa de Transporte
 
 # AF_INET especifica IPv4,
 #   tambien hay AF_UNIX para unix sockets y AF_INET6
@@ -14,6 +14,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.bind((HOST, PORT))
     s.listen()
     #accept() bloquea y deja esperando
+    tipo = input("Ingrese el codificador que desea usar (1. CRC  2. Hamming):")
     conn, addr = s.accept()
     with conn:
         while True: #en caso se envien mas de 1024 bytes
@@ -21,7 +22,9 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             data = conn.recv(1024)
             if not data:
                 break   #ya se recibio todo
-            # print(f"Recibidoo: \n{data!r}\n{data!s}\n{data!a}") #!r !s !a, repr() str() ascii()
-            # enlace = 
             decoded = str(data, "utf-8")
-            detect_error(decoded)
+            if tipo == "2":
+                hamming = Hamming()
+                hamming.detect_error(decoded)
+            else:
+                detect_error(decoded)

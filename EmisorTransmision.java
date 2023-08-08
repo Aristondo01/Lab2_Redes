@@ -15,7 +15,7 @@ import java.net.UnknownHostException;
 public class EmisorTransmision {
 
     private static String HOST = "127.0.0.1";
-    private static int PORT = 65432;
+    private static int PORT = 1235;
 
     public static void main(String[] args) throws IOException, UnknownHostException, InterruptedException {
         // ObjectOutputStream oos = null; //para serialized objects
@@ -25,14 +25,17 @@ public class EmisorTransmision {
 
         // crear socket/conexion
         Socket socketCliente = new Socket(InetAddress.getByName(HOST), PORT);
+        int cant = 5;
         Ruido ruido = new Ruido();
-        String payload = ruido.flipBits();
-        // mandar data
-        System.out.println("Enviando Data\n");
-        writer = new OutputStreamWriter(socketCliente.getOutputStream());
-        // String payload = "Hola Mundo Java 11";
-        writer.write(payload); // enviar payload
-        Thread.sleep(100);
+        for (int i = 0; i < cant; i++) {
+            String payload = ruido.flipBits();
+            // mandar data
+            System.out.println("Enviando Data\n");
+            writer = new OutputStreamWriter(socketCliente.getOutputStream());
+            // String payload = "Hola Mundo Java 11";
+            writer.write(payload); // enviar payload
+            Thread.sleep(100);
+        }
 
         // limpieza
         System.out.println("Liberando Sockets\n");

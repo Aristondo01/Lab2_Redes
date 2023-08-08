@@ -20,8 +20,8 @@ def generar_palabras(cantidad, longitud):
         archivo.write(palabras)
         
 
-a = input("Ingrese la cantidad de palabras a generar: ")
-
-generar_palabras(int(a), 5)
+#a = input("Ingrese la cantidad de palabras a generar: ")
+a= 100000
+generar_palabras(int(a), 6)
     
     
