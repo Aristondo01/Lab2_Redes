@@ -30,11 +30,12 @@ public class EmisorTransmision {
         for (int i = 0; i < cant; i++) {
             String payload = ruido.flipBits();
             // mandar data
-            System.out.println("Enviando Data\n");
+            // System.out.println("Enviando Data\n");
             writer = new OutputStreamWriter(socketCliente.getOutputStream());
             // String payload = "Hola Mundo Java 11";
             writer.write(payload); // enviar payload
-            Thread.sleep(100);
+            writer.flush();
+            Thread.sleep(10);
         }
 
         // limpieza

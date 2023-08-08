@@ -16,7 +16,7 @@ public class Ruido {
         // int tipoInt = Integer.parseInt(tipo);
         // double probability = Double.parseDouble(prob);
         int tipoInt = 1;
-        double probability = 0.0;
+        double probability = 0.2;
         EmisorFactory emisorFactory = new EmisorFactory();
         EmisorEnlace emisor = emisorFactory.create(tipoInt);
 

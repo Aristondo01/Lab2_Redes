@@ -13,10 +13,12 @@ class ReceptorPresentacion(object):
 
         return decoded_text
     
-    def decode_message(self, message, error=None):
+    def decode_message(self, message, type, error=None):
         aplicacion = ReceptorAplicacion()
         if error:
-            aplicacion.show_message(message, error)
+            aplicacion.show_message(message, type, error)
         else:
             message = self.bin_to_ascii(message)
-            aplicacion.show_message(message)
+            aplicacion.show_message(message, type)
+            
+        return self.bin_to_ascii(message)

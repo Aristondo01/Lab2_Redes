@@ -1,10 +1,40 @@
 import math
 from ReceptorPresentacion import ReceptorPresentacion
+import matplotlib.pyplot as plt
+
 
 class Hamming(object):
+    def __init__(self):
+        self.Errores = 0
+        self.Correctas = 0
+        self.word_length={}
+        
+    def get_estadisticas(self):
+        print("Accuracy: ", self.Correctas/(self.Correctas+self.Errores))
+        
+        x = self.word_length.keys()
+        y = self.word_length.values()
+        
+        plt.bar(x, y)
+        
+        plt.xlabel('Longitud de palabra')
+        plt.ylabel('Cantidad de errores encontrados')
+        plt.title('Histograma de errores')
+        plt.show(True)
+        
+    def push_diccionario(self,word):
+        word_len = len(word)
+        if word_len not in self.word_length:
+            self.word_length[word_len] = 1
+        else:
+            self.word_length[word_len] += 1
+
+        
+    
     def rotate_trama(self):
         self.trama = self.trama[::-1]
         self.trama = [int(c) for c in self.trama]
+        self.r_errors = {}
 
     def rotate(self, trama):
         return trama[::-1]
@@ -34,6 +64,12 @@ class Hamming(object):
             if i + 1 not in [2**j for j in range(r)]:
                 original.append(self.trama[i])
         return self.rotate(original)
+    
+    def add_error_entry(self, r):
+        if r not in self.r_errors:
+            self.r_errors[r] = 1
+        else:
+            self.r_errors[r] += 1
         
     def correct_errors(self):
         r = self.find_r()
@@ -54,6 +90,7 @@ class Hamming(object):
                 result += "0"
         
         if errors:
+            self.add_error_entry(r)
             error_position = self.base_2_to_10(result)
             self.trama[error_position - 1] = 1 if self.trama[error_position - 1] == 0 else 0
             # self.rotate_trama()
@@ -68,13 +105,37 @@ class Hamming(object):
         error, corrected, original = self.correct_errors()
         presentacion = ReceptorPresentacion()
         if error:
-            presentacion.decode_message(corrected, error)
+            self.Errores += 1
+            error_word = presentacion.decode_message(corrected, 2, error)
+            self.push_diccionario(error_word)
             # print("Hubo errores en la trama en la posicion:", error)
             # print("Trama corregida:", corrected + ".", "Trama original:", trama)
         else:
-            presentacion.decode_message(original)
+            self.Correctas += 1
+            presentacion.decode_message(original, 2)
             # print("No hubo errores en la trama:", corrected + ".", "Trama original:", original)
 
+    def get_estadisticas(self):
+        print("Accuracy: ", self.Correctas/(self.Correctas+self.Errores))
+        
+        x = self.word_length.keys()
+        y = self.word_length.values()
+        
+        plt.bar(x, y)
+        
+        plt.xlabel('Longitud de palabra')
+        plt.ylabel('Cantidad de errores encontrados')
+        plt.title('Histograma de errores')
+        plt.show()
+
+        x = self.r_errors.keys()
+        y = self.r_errors.values()
+        plt.bar(x, y)
+        
+        plt.xlabel('Valor P de Hamming')
+        plt.ylabel('Cantidad de errores encontrados')
+        plt.title('Histograma de errores')
+        plt.show()
 
 
 # def verify_input(trama):
