@@ -3,20 +3,9 @@ import java.util.Random;
 
 public class Ruido {
 
-    public String flipBits() {
+    public String flipBits(int tipo, double probability) {
         // 1: CRC; 2: Hamming
-
-        Scanner scanner = new Scanner(System.in);
-        // System.out.println("Ingrese la probabilidad de error (entre 0 y 1)");
-        // System.out.print("> ");
-        // String prob = scanner.nextLine();
-        // System.out.println("Ingrese 1 si desea usar CRC o 2 si desea usar Hamming");
-        // System.out.print("> ");
-        // String tipo = scanner.nextLine();
-        // int tipoInt = Integer.parseInt(tipo);
-        // double probability = Double.parseDouble(prob);
-        int tipoInt = 1;
-        double probability = 0.2;
+        int tipoInt = tipo;
         EmisorFactory emisorFactory = new EmisorFactory();
         EmisorEnlace emisor = emisorFactory.create(tipoInt);
 
@@ -28,18 +17,21 @@ public class Ruido {
 
         Random random = new Random();
         StringBuilder result = new StringBuilder();
-
+        int counter = 0;
         for (int i = 0; i < bits.length(); i++) {
             char bit = bits.charAt(i);
             char flippedBit = bit;
 
             if (random.nextDouble() < probability) {
                 flippedBit = (bit == '0') ? '1' : '0';
+                counter += 1;
             }
 
             result.append(flippedBit);
         }
-        scanner.close();
+        // System.out.println(counter);
+        // System.out.println(result);
+        // System.out.println("");
         return result.toString();
     }
 }

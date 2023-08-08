@@ -14,7 +14,8 @@ def generar_palabra(longitud):
 def generar_palabras(cantidad, longitud):
     palabras = ""
     for i in range(cantidad):
-        palabras += generar_palabra(longitud) + "\n"
+        longitud_random = random.randint(1, longitud)
+        palabras += generar_palabra(longitud_random) + "\n"
         
     with open("palabras.txt", "w") as archivo:
         archivo.write(palabras)
@@ -22,6 +23,6 @@ def generar_palabras(cantidad, longitud):
 
 #a = input("Ingrese la cantidad de palabras a generar: ")
 a= 100000
-generar_palabras(int(a), 6)
+generar_palabras(int(a), 20)
     
     

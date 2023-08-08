@@ -14,7 +14,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.bind((HOST, PORT))
     s.listen()
     #accept() bloquea y deja esperando
-    tipo = input("Ingrese el codificador que desea usar (1. CRC  2. Hamming):")
+    tipo = input("Ingrese el codificador que desea usar (1. CRC  2. Hamming): ")
     conn, addr = s.accept()
     enlace = CR32() if tipo == "1" else Hamming()
     with conn:

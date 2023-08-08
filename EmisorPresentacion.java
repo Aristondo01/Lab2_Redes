@@ -16,7 +16,6 @@ public class EmisorPresentacion {
 
             binaryStringBuilder.append(binary);
         }
-
         return binaryStringBuilder.toString();
     }
 }

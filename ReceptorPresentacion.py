@@ -3,22 +3,28 @@ from ReceptorAplicacion import ReceptorAplicacion
 class ReceptorPresentacion(object):
 
     def bin_to_ascii(self, binary_string):
-        binary_list = [binary_string[i:i+7] for i in range(0, len(binary_string), 7)]  # Divide la cadena en bloques de 8 bits
-        decoded_text = ""
-
-        for binary in binary_list:
-            decimal_value = int(binary, 2)  # Convierte el valor binario a decimal
-            char = chr(decimal_value)  # Obtiene el carácter ASCII correspondiente
-            decoded_text += char
-
-        return decoded_text
+        try:
+            binary_list = [binary_string[i:i+7] for i in range(0, len(binary_string), 7)]  # Divide la cadena en bloques de 8 bits
+            decoded_text = ""
+            # print(binary_list)
+            for binary in binary_list:
+                # print(binary)
+                decimal_value = int(binary, 2)  # Convierte el valor binario a decimal
+                char = chr(decimal_value)  # Obtiene el carácter ASCII correspondiente
+                decoded_text += char
+            return decoded_text
+        except:
+            pass
+        
+        return ""
+        
     
     def decode_message(self, message, type, error=None):
-        aplicacion = ReceptorAplicacion()
+        aplicacion = ReceptorAplicacion()  
         if error:
             aplicacion.show_message(message, type, error)
         else:
-            message = self.bin_to_ascii(message)
-            aplicacion.show_message(message, type)
+            message_converted = self.bin_to_ascii(message)
+            aplicacion.show_message(message_converted, type)
             
         return self.bin_to_ascii(message)

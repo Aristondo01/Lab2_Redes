@@ -8,6 +8,18 @@ class Hamming(object):
         self.Errores = 0
         self.Correctas = 0
         self.word_length={}
+        self.palabras = []
+        self.read_file()
+        self.counter = 0
+        self.corrected_errors = 0
+        self.well_corrected_errors = 0
+        self.r_errors = {}
+        
+    def read_file(self):
+        with open('palabras.txt') as f:
+            lines = f.readlines()
+        for line in lines:
+            self.palabras.append(line.strip())
         
     def get_estadisticas(self):
         print("Accuracy: ", self.Correctas/(self.Correctas+self.Errores))
@@ -34,7 +46,6 @@ class Hamming(object):
     def rotate_trama(self):
         self.trama = self.trama[::-1]
         self.trama = [int(c) for c in self.trama]
-        self.r_errors = {}
 
     def rotate(self, trama):
         return trama[::-1]
@@ -57,12 +68,12 @@ class Hamming(object):
             i += 1
         return result
     
-    def original_message(self):
+    def original_message(self, trama):
         r = self.find_r()
         original = []
-        for i in range(len(self.trama)):
+        for i in range(len(trama)):
             if i + 1 not in [2**j for j in range(r)]:
-                original.append(self.trama[i])
+                original.append(trama[i])
         return self.rotate(original)
     
     def add_error_entry(self, r):
@@ -88,16 +99,19 @@ class Hamming(object):
                 result += "1"
             else:
                 result += "0"
-        
         if errors:
             self.add_error_entry(r)
             error_position = self.base_2_to_10(result)
+            if error_position - 1 >= len(self.trama):
+                return None, "".join(str(element) for element in self.rotate(self.trama)), "".join(str(element) for element in self.original_message(self.trama))
             self.trama[error_position - 1] = 1 if self.trama[error_position - 1] == 0 else 0
             # self.rotate_trama()
-            return error_position, "".join(str(element) for element in self.rotate(self.trama)), "".join(str(element) for element in self.original_message())
+            # corrected_word = "".join(str(element) for element in self.rotate(self.trama))
+            corrected_word = "".join(str(element) for element in self.original_message(self.trama))
+            return error_position, corrected_word, "".join(str(element) for element in self.original_message(self.trama))
         
         # self.rotate_trama()
-        return None, "".join(str(element) for element in self.rotate(self.trama)), "".join(str(element) for element in self.original_message())
+        return None, "".join(str(element) for element in self.rotate(self.trama)), "".join(str(element) for element in self.original_message(self.trama))
     
     def detect_error(self, trama):
         self.trama = trama
@@ -108,15 +122,22 @@ class Hamming(object):
             self.Errores += 1
             error_word = presentacion.decode_message(corrected, 2, error)
             self.push_diccionario(error_word)
+            if error_word == self.palabras[self.counter]:
+                self.well_corrected_errors += 1
+            self.corrected_errors += 1
             # print("Hubo errores en la trama en la posicion:", error)
             # print("Trama corregida:", corrected + ".", "Trama original:", trama)
         else:
             self.Correctas += 1
             presentacion.decode_message(original, 2)
             # print("No hubo errores en la trama:", corrected + ".", "Trama original:", original)
+        self.counter += 1
 
     def get_estadisticas(self):
         print("Accuracy: ", self.Correctas/(self.Correctas+self.Errores))
+
+        if self.corrected_errors > 0:
+            print("Porcentaje de errores bien corregidos: ", ((self.well_corrected_errors * 1.0) / self.corrected_errors) * 100)
         
         x = self.word_length.keys()
         y = self.word_length.values()
@@ -130,12 +151,14 @@ class Hamming(object):
 
         x = self.r_errors.keys()
         y = self.r_errors.values()
+        print(x)
         plt.bar(x, y)
         
         plt.xlabel('Valor P de Hamming')
         plt.ylabel('Cantidad de errores encontrados')
         plt.title('Histograma de errores')
         plt.show()
+        
 
 
 # def verify_input(trama):

@@ -83,7 +83,7 @@ class CR32(object):
         print(x)
         
         plt.bar(x, y)
-        
+        plt.xticks(range(min(x), max(x)+1, 1))
         plt.xlabel('Longitud de palabra')
         plt.ylabel('Cantidad de errores encontrados')
         plt.title('Histograma de errores')

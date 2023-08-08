@@ -32,7 +32,7 @@ public class EmisorApp {
                 String line;
                 int mini_contador = 0;
                 while ((line = br.readLine()) != null) {
-                    palabras[mini_contador] = line;
+                    palabras[mini_contador] = line.trim();
                     mini_contador++;
                 }
             } catch (IOException e) {

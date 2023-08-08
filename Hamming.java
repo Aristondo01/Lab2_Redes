@@ -22,8 +22,6 @@ public class Hamming implements EmisorEnlace {
             p++;
         }
 
-        System.out.println("p: " + p);
-
         return p;
     }
 
