@@ -29,4 +29,4 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             else:
                 enlace.detect_error(decoded)
 
-    enlace.get_estadisticas()
+    # enlace.get_estadisticas()

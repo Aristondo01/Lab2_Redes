@@ -47,19 +47,19 @@ public class EmisorApp {
     }
 
     public String solicitarMensaje() {
-        // System.out.println("Ingrese el mensaje que desea usar:");
-        // System.out.print("> ");
-        // Scanner scanner = new Scanner(System.in);
-        // String trama = scanner.nextLine();
-        // Object[] response = checkInput(trama);
-        // boolean allGood = (boolean) response[0];
-        // int[] data_int = (int[]) response[1];
+        System.out.println("Ingrese el mensaje que desea usar:");
+        System.out.print("> ");
+        Scanner scanner = new Scanner(System.in);
+        String trama = scanner.nextLine();
+        Object[] response = checkInput(trama);
+        boolean allGood = (boolean) response[0];
+        int[] data_int = (int[]) response[1];
         // if (!allGood) {
         // System.out.println("Error: Ingrese correctamente la trama.");
         // }
-        // scanner.close();
-        // return trama;
-        String trama = leerArchivo();
+        scanner.close();
         return trama;
+        // String trama = leerArchivo();
+        // return trama;
     }
 }

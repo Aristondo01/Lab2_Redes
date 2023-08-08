@@ -36,16 +36,21 @@ public class EmisorTransmision {
         Socket socketCliente = new Socket(InetAddress.getByName(HOST), PORT);
         int cant = 10000;
         Ruido ruido = new Ruido();
-        for (int i = 0; i < cant; i++) {
-            String payload = ruido.flipBits(tipoInt, probability);
-            // mandar data
-            // System.out.println("Enviando Data\n");
-            writer = new OutputStreamWriter(socketCliente.getOutputStream());
-            // String payload = "Hola Mundo Java 11";
-            writer.write(payload); // enviar payload
-            writer.flush();
-            Thread.sleep(30);
-        }
+        String payload = ruido.flipBits(tipoInt, probability);
+        writer = new OutputStreamWriter(socketCliente.getOutputStream());
+        writer.write(payload); // enviar payload
+        writer.flush();
+        Thread.sleep(30);
+        // for (int i = 0; i < cant; i++) {
+        //     String payload = ruido.flipBits(tipoInt, probability);
+        //     // mandar data
+        //     // System.out.println("Enviando Data\n");
+        //     writer = new OutputStreamWriter(socketCliente.getOutputStream());
+        //     // String payload = "Hola Mundo Java 11";
+        //     writer.write(payload); // enviar payload
+        //     writer.flush();
+        //     Thread.sleep(30);
+        // }
 
         // limpieza
         System.out.println("Liberando Sockets\n");
